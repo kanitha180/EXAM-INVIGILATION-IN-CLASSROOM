@@ -1,0 +1,70 @@
+body{
+    margin:0;
+    padding:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#07152d;
+    color:white;
+}
+
+.hero{
+    text-align:center;
+    padding:80px 20px;
+}
+
+.hero h1{
+    font-size:55px;
+    color:#00e5ff;
+}
+
+.hero p{
+    font-size:20px;
+    color:#d8d8d8;
+}
+
+.btn-start{
+    display:inline-flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+
+    background:#00bcd4;
+    color:white;
+
+    padding:15px 35px;
+
+    text-decoration:none;
+
+    border-radius:30px;
+
+    font-size:20px;
+    font-weight:bold;
+
+    transition:0.3s;
+}
+
+.btn-start:hover{
+    background:#00e5ff;
+    transform:scale(1.05);
+}
+
+.features{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+    margin-top:60px;
+}
+
+.card{
+    background:rgba(255,255,255,0.08);
+    width:280px;
+    padding:25px;
+    border-radius:20px;
+    text-align:center;
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 0 20px cyan;
+}

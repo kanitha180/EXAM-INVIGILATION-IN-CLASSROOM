@@ -1,16 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Exam Invigilation System</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
 
-    <h1>AI Exam Invigilation System</h1>
+    <div class="hero">
 
-    <h3>Hackathon 2026</h3>
+        <h1>🤖 AI Exam Invigilation System</h1>
 
-    <p>Welcome to AI Based Exam Monitoring System.</p>
+        <p>
+            Smart AI Powered Classroom Monitoring using Computer Vision
+        </p>
+
+        <a href="/monitor" class="btn-start">
+    🚀 Start Monitoring
+</a>
+    </div>
+
+    <div class="features">
+
+        <div class="card">
+            <h2>🎥 Live Camera</h2>
+            <p>Real-time classroom monitoring.</p>
+        </div>
+
+        <div class="card">
+            <h2>😀 Face Detection</h2>
+            <p>AI detects student faces instantly.</p>
+        </div>
+
+        <div class="card">
+            <h2>⚠️ Cheating Alert</h2>
+            <p>Detect suspicious activities automatically.</p>
+        </div>
+    </div>
 
 </body>
 </html>
