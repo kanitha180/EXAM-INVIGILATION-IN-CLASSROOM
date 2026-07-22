@@ -3,13 +3,13 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AI Monitoring Dashboard</title>
+    <title>AI Exam Invigilation Dashboard</title>
 
-<link rel="stylesheet"
-href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
 
 </head>
 
@@ -21,21 +21,25 @@ href="{{ url_for('static', filename='css/style.css') }}">
 
 <div class="dashboard">
 
-    <!-- Camera -->
+    <!-- ================= CAMERA ================= -->
 
     <div class="camera-panel">
 
-        <img src="{{ url_for('video') }}" class="camera-feed">
+        <img
+            src="{{ url_for('video') }}"
+            class="camera-feed"
+            id="cameraFeed"
+        >
 
     </div>
 
-    <!-- Right Side -->
+    <!-- ================= RIGHT PANEL ================= -->
 
     <div class="status-panel">
 
         <div class="status-card">
             <h3>👤 Persons</h3>
-            <p id="persons">1</p>
+            <p id="persons">0</p>
         </div>
 
         <div class="status-card">
@@ -45,7 +49,7 @@ href="{{ url_for('static', filename='css/style.css') }}">
 
         <div class="status-card">
             <h3>👀 Head Pose</h3>
-            <p id="head">Forward</p>
+            <p id="head">Looking Forward</p>
         </div>
 
         <div class="status-card">
@@ -58,9 +62,40 @@ href="{{ url_for('static', filename='css/style.css') }}">
             <p id="alerts">0</p>
         </div>
 
+        <div class="status-card">
+            <h3>🟢 System Status</h3>
+            <p style="color:lime;">
+                LIVE
+            </p>
+        </div>
+
+        <div class="status-card">
+
+            <button
+                onclick="downloadReport()"
+                class="download-btn">
+
+                📄 Download Report
+
+            </button>
+
+        </div>
+
     </div>
 
 </div>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+<script>
+
+function downloadReport(){
+
+    window.location.href="/report";
+
+}
+
+</script>
 
 </body>
 

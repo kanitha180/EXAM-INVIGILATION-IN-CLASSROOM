@@ -1,38 +1,40 @@
 import cv2
 from ultralytics import YOLO
 
+from detection.status import set_phone, increase_alert
 from detection.risk_score import add_risk
 from detection.logger import log_violation
-from detection.status import set_phone, increase_alert
+from detection.evidence import start_recording
 
-# Load YOLOv8 Nano model
+# Load YOLO model only once
 model = YOLO("yolov8n.pt")
 
 
 def detect_phone(frame):
 
-    # Default Status
-    set_phone("Not Detected")
+    phone_found = False
 
     results = model.predict(
         source=frame,
-        conf=0.45,
+        conf=0.40,
         verbose=False
     )
 
     for result in results:
 
-        boxes = result.boxes
-
-        for box in boxes:
+        for box in result.boxes:
 
             cls = int(box.cls[0])
+
             label = model.names[cls]
 
             if label == "cell phone":
 
+                phone_found = True
+
                 x1, y1, x2, y2 = map(int, box.xyxy[0])
 
+                # RED Rectangle
                 cv2.rectangle(
                     frame,
                     (x1, y1),
@@ -41,26 +43,33 @@ def detect_phone(frame):
                     3
                 )
 
+                # Label
                 cv2.putText(
                     frame,
-                    "🚨 MOBILE PHONE DETECTED",
-                    (30, 160),
+                    "PHONE DETECTED",
+                    (x1, y1 - 10),
                     cv2.FONT_HERSHEY_SIMPLEX,
                     0.8,
                     (0, 0, 255),
                     2
                 )
 
-                # Dashboard Update
-                set_phone("Detected")
+    if phone_found:
 
-                # Log Violation
-                log_violation("Mobile Phone Detected")
+        set_phone("Detected")
 
-                # Increase Risk Score
-                add_risk(40)
+        increase_alert()
 
-                # Increase Alert Count
-                increase_alert()
+        add_risk(40)
+
+        log_violation(
+            "Mobile Phone Detected",
+            "HIGH"
+        )
+        start_recording(frame)
+
+    else:
+
+        set_phone("Not Detected")
 
     return frame

@@ -1,12 +1,15 @@
 import cv2
 import mediapipe as mp
+
 from detection.status import set_persons
+from detection.logger import log_violation
+from detection.risk_score import add_risk
 
 mp_face = mp.solutions.face_detection
 
 face_detection = mp_face.FaceDetection(
     model_selection=0,
-    min_detection_confidence=0.5
+    min_detection_confidence=0.6
 )
 
 def detect_faces(frame):
@@ -16,11 +19,11 @@ def detect_faces(frame):
 
     face_count = 0
 
+    h, w, _ = frame.shape
+
     if results.detections:
 
         face_count = len(results.detections)
-
-        h, w, _ = frame.shape
 
         for detection in results.detections:
 
@@ -31,25 +34,31 @@ def detect_faces(frame):
             bw = int(bbox.width * w)
             bh = int(bbox.height * h)
 
+            # Green Rectangle
+            color = (0,255,0)
+
+            # Multiple Students -> Red Rectangle
+            if face_count > 1:
+                color = (0,0,255)
+
             cv2.rectangle(
                 frame,
-                (x, y),
-                (x + bw, y + bh),
-                (0, 255, 0),
-                2
+                (x,y),
+                (x+bw,y+bh),
+                color,
+                3
             )
 
-    # Update dashboard person count
     set_persons(face_count)
 
     # Face Count
     cv2.putText(
         frame,
         f"Faces : {face_count}",
-        (20, 80),
+        (20,40),
         cv2.FONT_HERSHEY_SIMPLEX,
-        1,
-        (255, 255, 0),
+        0.8,
+        (255,255,0),
         2
     )
 
@@ -58,23 +67,23 @@ def detect_faces(frame):
 
         cv2.putText(
             frame,
-            "STATUS : No Student",
-            (20, 120),
+            "STATUS : NO STUDENT",
+            (20,80),
             cv2.FONT_HERSHEY_SIMPLEX,
-            1,
-            (0, 0, 255),
+            0.8,
+            (0,0,255),
             2
         )
 
-    elif face_count > 1:
+    elif face_count == 1:
 
         cv2.putText(
             frame,
-            "STATUS : Multiple Students",
-            (20, 120),
+            "STATUS : NORMAL",
+            (20,80),
             cv2.FONT_HERSHEY_SIMPLEX,
-            1,
-            (0, 0, 255),
+            0.8,
+            (0,255,0),
             2
         )
 
@@ -82,12 +91,19 @@ def detect_faces(frame):
 
         cv2.putText(
             frame,
-            "STATUS : Normal",
-            (20, 120),
+            "WARNING : MULTIPLE STUDENTS",
+            (20,80),
             cv2.FONT_HERSHEY_SIMPLEX,
-            1,
-            (0, 255, 0),
+            0.8,
+            (0,0,255),
             2
         )
+
+        log_violation(
+            "Multiple Students Detected",
+            "HIGH"
+        )
+
+        add_risk(25)
 
     return frame
