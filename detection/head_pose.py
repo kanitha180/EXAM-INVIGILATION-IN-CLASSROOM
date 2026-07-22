@@ -14,10 +14,10 @@ LEFT_EYE = 33
 RIGHT_EYE = 263
 NOSE = 1
 
+
 def detect_head_pose(frame):
 
     rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-
     results = face_mesh.process(rgb)
 
     if results.multi_face_landmarks:
@@ -37,13 +37,16 @@ def detect_head_pose(frame):
             center = (left_x + right_x) // 2
 
             if nose_x < center - 20:
-                text = "Looking Left"
+                text = "⚠ Looking Left"
+                color = (0, 0, 255)
 
             elif nose_x > center + 20:
-                text = "Looking Right"
+                text = "⚠ Looking Right"
+                color = (0, 0, 255)
 
             else:
-                text = "Looking Forward"
+                text = "✅ Looking Forward"
+                color = (0, 255, 0)
 
             cv2.putText(
                 frame,
@@ -51,7 +54,7 @@ def detect_head_pose(frame):
                 (30, 40),
                 cv2.FONT_HERSHEY_SIMPLEX,
                 1,
-                (0, 255, 0),
+                color,
                 2
             )
 
