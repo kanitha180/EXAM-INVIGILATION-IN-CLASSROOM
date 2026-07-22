@@ -5,6 +5,7 @@ from detection.status import set_persons
 from detection.logger import log_violation
 from detection.risk_score import add_risk
 
+
 mp_face = mp.solutions.face_detection
 
 face_detection = mp_face.FaceDetection(
@@ -105,5 +106,4 @@ def detect_faces(frame):
         )
 
         add_risk(25)
-
     return frame

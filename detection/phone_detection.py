@@ -6,6 +6,7 @@ from detection.risk_score import add_risk
 from detection.logger import log_violation
 from detection.evidence import start_recording
 
+
 # Load YOLO model only once
 model = YOLO("yolov8n.pt")
 
@@ -67,6 +68,7 @@ def detect_phone(frame):
             "HIGH"
         )
         start_recording(frame)
+        
 
     else:
 
