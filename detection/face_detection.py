@@ -1,5 +1,6 @@
 import cv2
 import mediapipe as mp
+from detection.status import set_persons
 
 mp_face = mp.solutions.face_detection
 
@@ -30,7 +31,16 @@ def detect_faces(frame):
             bw = int(bbox.width * w)
             bh = int(bbox.height * h)
 
-            cv2.rectangle(frame, (x, y), (x + bw, y + bh), (0, 255, 0), 2)
+            cv2.rectangle(
+                frame,
+                (x, y),
+                (x + bw, y + bh),
+                (0, 255, 0),
+                2
+            )
+
+    # Update dashboard person count
+    set_persons(face_count)
 
     # Face Count
     cv2.putText(

@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
-<title>Live Monitoring</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI Monitoring Dashboard</title>
 
 <link rel="stylesheet"
 href="{{ url_for('static', filename='css/style.css') }}">
@@ -12,12 +15,50 @@ href="{{ url_for('static', filename='css/style.css') }}">
 
 <body>
 
-<div class="hero">
+<h1 class="dashboard-title">
+🤖 AI EXAM INVIGILATION DASHBOARD
+</h1>
 
-<h1>🎥 Live AI Monitoring</h1>
+<div class="dashboard">
 
-<img src="{{ url_for('video') }}"
-width="800">
+    <!-- Camera -->
+
+    <div class="camera-panel">
+
+        <img src="{{ url_for('video') }}" class="camera-feed">
+
+    </div>
+
+    <!-- Right Side -->
+
+    <div class="status-panel">
+
+        <div class="status-card">
+            <h3>👤 Persons</h3>
+            <p id="persons">1</p>
+        </div>
+
+        <div class="status-card">
+            <h3>📊 Risk</h3>
+            <p id="risk">LOW</p>
+        </div>
+
+        <div class="status-card">
+            <h3>👀 Head Pose</h3>
+            <p id="head">Forward</p>
+        </div>
+
+        <div class="status-card">
+            <h3>📱 Phone</h3>
+            <p id="phone">Not Detected</p>
+        </div>
+
+        <div class="status-card">
+            <h3>🚨 Alerts</h3>
+            <p id="alerts">0</p>
+        </div>
+
+    </div>
 
 </div>
 

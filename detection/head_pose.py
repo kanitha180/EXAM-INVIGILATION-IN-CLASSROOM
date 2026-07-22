@@ -1,6 +1,10 @@
 import cv2
 import mediapipe as mp
+
 from detection.violation_counter import increase_left, increase_right
+from detection.logger import log_violation
+from detection.risk_score import add_risk
+from detection.status import set_head_pose, increase_alert
 
 mp_face_mesh = mp.solutions.face_mesh
 
@@ -17,6 +21,7 @@ NOSE = 1
 
 
 def detect_head_pose(frame):
+
     rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     results = face_mesh.process(rgb)
 
@@ -37,18 +42,35 @@ def detect_head_pose(frame):
             center = (left_x + right_x) // 2
 
             if nose_x < center - 20:
+
                 text = "Looking Left"
                 color = (0, 0, 255)
+
                 increase_left()
+                log_violation("Looking Left")
+                add_risk(5)
+
+                set_head_pose("Looking Left")
+                increase_alert()
 
             elif nose_x > center + 20:
+
                 text = "Looking Right"
                 color = (0, 0, 255)
+
                 increase_right()
+                log_violation("Looking Right")
+                add_risk(5)
+
+                set_head_pose("Looking Right")
+                increase_alert()
 
             else:
+
                 text = "Looking Forward"
                 color = (0, 255, 0)
+
+                set_head_pose("Looking Forward")
 
             cv2.putText(
                 frame,
