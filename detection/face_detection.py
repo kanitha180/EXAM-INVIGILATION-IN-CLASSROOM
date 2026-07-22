@@ -30,50 +30,53 @@ def detect_faces(frame):
             bw = int(bbox.width * w)
             bh = int(bbox.height * h)
 
-            cv2.rectangle(frame, (x, y), (x+bw, y+bh), (0,255,0), 2)
+            cv2.rectangle(frame, (x, y), (x + bw, y + bh), (0, 255, 0), 2)
 
+    # Face Count
     cv2.putText(
         frame,
         f"Faces : {face_count}",
-        (20,80),
+        (20, 80),
         cv2.FONT_HERSHEY_SIMPLEX,
         1,
-        (255,255,0),
+        (255, 255, 0),
         2
     )
 
-    # No Face Alert
+    # Status
     if face_count == 0:
+
         cv2.putText(
             frame,
-            "ALERT : No Face Detected",
-            (20,120),
+            "STATUS : No Student",
+            (20, 120),
             cv2.FONT_HERSHEY_SIMPLEX,
             1,
-            (0,0,255),
-            3
+            (0, 0, 255),
+            2
         )
 
-    # Multiple Face Alert
     elif face_count > 1:
+
         cv2.putText(
             frame,
-            "ALERT : Multiple Faces Detected",
-            (20,120),
+            "STATUS : Multiple Students",
+            (20, 120),
             cv2.FONT_HERSHEY_SIMPLEX,
             1,
-            (0,0,255),
-            3
+            (0, 0, 255),
+            2
         )
 
     else:
+
         cv2.putText(
             frame,
             "STATUS : Normal",
-            (20,120),
+            (20, 120),
             cv2.FONT_HERSHEY_SIMPLEX,
             1,
-            (0,255,0),
+            (0, 255, 0),
             2
         )
 

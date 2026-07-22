@@ -1,5 +1,6 @@
 import cv2
 import mediapipe as mp
+from detection.violation_counter import increase_left, increase_right
 
 mp_face_mesh = mp.solutions.face_mesh
 
@@ -16,7 +17,6 @@ NOSE = 1
 
 
 def detect_head_pose(frame):
-
     rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     results = face_mesh.process(rgb)
 
@@ -37,15 +37,17 @@ def detect_head_pose(frame):
             center = (left_x + right_x) // 2
 
             if nose_x < center - 20:
-                text = "⚠ Looking Left"
+                text = "Looking Left"
                 color = (0, 0, 255)
+                increase_left()
 
             elif nose_x > center + 20:
-                text = "⚠ Looking Right"
+                text = "Looking Right"
                 color = (0, 0, 255)
+                increase_right()
 
             else:
-                text = "✅ Looking Forward"
+                text = "Looking Forward"
                 color = (0, 255, 0)
 
             cv2.putText(

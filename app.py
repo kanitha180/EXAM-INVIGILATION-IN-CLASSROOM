@@ -3,6 +3,7 @@ import cv2
 
 from detection.face_detection import detect_faces
 from detection.head_pose import detect_head_pose
+from detection.phone_detection import detect_phone
 
 app = Flask(__name__)
 
@@ -21,6 +22,9 @@ def generate_frames():
         # Head Pose Detection
         frame = detect_head_pose(frame)
 
+        # Mobile Phone Detection
+        #frame = detect_phone(frame)
+        
         ret, buffer = cv2.imencode(".jpg", frame)
         frame = buffer.tobytes()
 

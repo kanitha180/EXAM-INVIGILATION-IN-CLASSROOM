@@ -56,15 +56,22 @@ body{
 }
 
 .card{
-    background:rgba(255,255,255,0.08);
-    width:280px;
-    padding:25px;
-    border-radius:20px;
-    text-align:center;
-    transition:0.3s;
+    background: #1c2940;
+    border-radius: 20px;
+    padding: 30px;
+    width: 320px;
+    text-align: center;
+
+    /* New Properties */
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    box-shadow: 0 0 15px rgba(0,255,255,0.2);
 }
 
 .card:hover{
-    transform:translateY(-10px);
-    box-shadow:0 0 20px cyan;
+    transform: translateY(-8px);
+    box-shadow: 0 0 25px cyan;
 }
