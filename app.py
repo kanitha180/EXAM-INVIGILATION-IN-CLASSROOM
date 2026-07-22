@@ -1,5 +1,6 @@
 from flask import Flask, render_template, Response
 import cv2
+from detection.face_detection import detect_faces
 
 app = Flask(__name__)
 
@@ -12,8 +13,10 @@ def generate_frames():
         if not success:
             break
 
-        ret, buffer = cv2.imencode('.jpg', frame)
+        # AI Face Detection
+        frame = detect_faces(frame)
 
+        ret, buffer = cv2.imencode('.jpg', frame)
         frame = buffer.tobytes()
 
         yield (b'--frame\r\n'
